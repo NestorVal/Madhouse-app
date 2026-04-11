@@ -1,0 +1,1493 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #121212;
+}
+header h1{
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.madhouse-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.madhouse-link:hover {
+  color: inherit;
+}
+
+.madhouse-link:visited {
+  color: inherit;
+}
+
+nav a{
+    font-size: 20px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+
+}
+nav ul li{
+    margin-left: 30px;
+}
+
+.boton button{
+    border: none;
+    padding: 10px 20px;
+    color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.boton #boton-inicio-sesion, #boton-reservar{
+    background-color: #C69C3B;
+}
+
+.boton #boton-registrarse, 
+#boton-horarios,
+#boton-corte,
+#boton-barba,
+#boton-tratamientos{
+    background-color: #121212;
+    border: 1px solid #ffffff;
+}
+
+.boton #boton-horarios{
+    margin-left: 20px;
+    font-size: large;
+}
+img{
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 80px;
+    text-align: center;
+}
+.container1{
+    align-items: center;
+    padding: 40px 300px;
+    text-align: center;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 60px;
+}
+
+.texto{
+    text-align: center;
+    padding-bottom: 40px;
+}
+.texto h2{
+    padding: 20px 0;
+    font-size: 70px;
+}
+
+.texto p{
+    font-size: 20px;
+}
+.boton #boton-reservar{
+    font-size: large;
+    margin-top: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5)  ;
+}
+.tarjetas .tarjeta{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.tarjetas-superior,
+.tarjetas-inferior{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 60px;
+    gap: 10px;
+}
+.tarjetas-servicios{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 60px;
+    gap: 10px;
+}
+.tarjeta-servicio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    width: 30%;
+}
+.tarjeta-servicio h3{
+    margin-top: 20px;
+    font-size: 24px;
+}
+.tarjeta-servicio p{
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+footer{
+     background-color: #121212;
+}
+footer #telefono, #email{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+footer .contacto{
+    justify-content: center;
+}
+
+footer #horarios{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+footer #ubicacion{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+footer div h3{
+    padding-bottom: 20px;
+}
+
+footer div #lema{
+    padding-bottom: 20px;
+}
+footer #linea{
+    width: 100%;
+    height: 1px;
+    background-color: #ffffff;
+    margin: 20px 0;
+}
+footer #footer-container{   
+    color: #ffffff;
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer #linea{
+    width: 100%;
+    height: 1px;
+    background-color: #ffffff;
+    margin: 20px 0;
+}
+
+footer #copyright{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    color: #ffffff;
+}
+
+/*ESTILOS PANTALLA DE LOGIN Y REGISTRO */
+
+.container-register, .container-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+
+.caja-formulario {
+    background-color: #f0f0f0;
+    padding: 40px 60px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.caja-formulario .texto {
+    padding-bottom: 20px;
+    color: #121212;
+}
+
+.caja-formulario .texto h2 {
+    font-size: 40px;
+    padding: 10px 0;
+    color: #C69C3B;
+}
+
+.caja-formulario .texto p {
+    font-size: 16px;
+}
+
+.campos-formulario {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.campos-formulario label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #121212;
+}
+
+.campos-formulario input,
+.campos-formulario select {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.caja-formulario .boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.caja-formulario .btn-formulario {
+    width: 100%;
+    font-size: 18px;
+    padding: 15px;
+}
+
+.cambio-form {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #121212;
+}
+
+.cambio-form a {
+    color: #C69C3B;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ESTILOS PARA DASHBOARD-CLIENTE */
+
+.container-dashboard {
+    display: grid;
+    grid-template-columns: 280px 1fr; 
+    gap: 40px;
+    padding: 40px 80px;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+/* ESTILOS DEL MENÚ LATERAL */
+.sidebar-perfil {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    height: fit-content;
+}
+
+.foto-circular {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 4px solid #C69C3B;
+    margin-bottom: 15px;
+}
+
+.info-usuario h3 {
+    color: #121212;
+    font-size: 22px;
+}
+
+.info-usuario p {
+    color: #C69C3B;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-menu {
+    background-color: transparent;
+    border: 2px solid #121212;
+    color: #121212;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.btn-menu:hover {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.btn-menu.activo {
+    background-color: #C69C3B;
+    color: #ffffff;
+    border-color: #C69C3B;
+}
+
+/* ESTILOS DEL CONTENIDO PRINCIPAL */
+.texto-izq {
+    text-align: left;
+    color: #121212;
+}
+
+.texto-izq h2 {
+    color: #C69C3B;
+    padding-bottom: 10px;
+}
+
+.tarjetas-resumen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.tarjeta-dash {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 30px;
+    color: #121212;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cabecera-tarjeta h3 {
+    color: #C69C3B;
+    font-size: 24px;
+    border-bottom: 2px solid #121212;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.detalle-cita p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.tarjeta-centrada {
+    text-align: center;
+}
+
+.numero-puntos {
+    font-size: 70px;
+    color: #121212;
+    margin: 20px 0;
+}
+
+/* ESTILOS COMPLEMENTARIOS PARA PERFIL-CLIENTE */
+
+.container-perfil-cliente {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 80px;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+.contenido-perfil-cliente {
+    width: 100%;
+    max-width: 800px;
+}
+
+.contenido-dashboard{
+    padding: 0 100px;
+}
+.tarjeta-perfil-lila {
+    background-color: #E6E0F8;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    color: #121212;
+}
+
+.avatar-perfil {
+    position: relative;
+    width: 150px;
+    margin: 0 auto 20px;
+}
+
+.avatar-perfil img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.badge-edit {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.texto-interno h3 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.datos-cliente .dato {
+    display: flex;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.datos-cliente .dato strong {
+    width: 220px;
+}
+
+/* Stats */
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-item .icon { color: #C69C3B; font-size: 24px; }
+
+#btn-editar-interno {
+    background-color: #121212;
+    color: #fff;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.acciones-footer-perfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding-bottom: 30px;
+}
+
+.btn-full-width {
+    width: 100%;
+    background-color: #121212 !important;
+    padding: 20px !important;
+    font-size: 20px !important;
+}
+
+.link-volver {
+    padding-top: 20px;
+    color: #121212;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/*ESTILOS FLUJO DE RESERVA*/
+
+.container-reserva {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+.opciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.opcion-tarjeta {
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #121212;
+}
+
+.opcion-tarjeta h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.opcion-tarjeta p {
+    font-size: 14px;
+    color: #666666;
+}
+
+.opcion-tarjeta:hover {
+    border-color: #C69C3B;
+}
+
+.opcion-tarjeta.activa {
+    background-color: #121212;
+    color: #ffffff;
+    border-color: #C69C3B;
+}
+
+.opcion-tarjeta.activa p {
+    color: #C69C3B;
+}
+
+.paso-oculto {
+    display: none;
+}
+
+.grupo-botones #boton-reservar {
+    margin-top: 0 !important;
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.grupo-botones-derecha {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.btn-secundario, .btn-sig{
+    background-color: #121212 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+}
+
+.foto-barbero {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.label-espaciado {
+    margin-top: 20px;
+}
+
+.tarjeta-hora {
+    padding: 10px;
+}
+
+.resumen-cita {
+    text-align: left;
+    background-color: #121212;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.resumen-cita p {
+    margin-bottom: 8px;
+}
+
+.total-resumen {
+    color: #C69C3B;
+    font-size: 20px;
+    margin-top: 15px !important;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+/* COMPONENTES SISTEMA DE FIDELIZACIÓN */
+
+.titulo-fidelizacion {
+    font-size: 50px !important;
+    font-weight: 800;
+}
+
+.tarjeta-blanca-puntos {
+    background-color: #ffffff;
+    border-radius: 25px;
+    padding: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    color: #121212;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.puntos-badge-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.icon-puntos-circular {
+    background-color: #9ea1a3;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+    color: #C69C3B;
+    font-size: 24px;
+}
+
+.numero-grande {
+    font-size: 80px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.conteo-puntos p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Barra de Progreso */
+.barra-progreso-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.barra-progreso-fondo {
+    background-color: #e0e0e0;
+    height: 12px;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.barra-progreso-lleno {
+    background-color: #121212;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.meta-puntos {
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.promocion-fija {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.texto-izq h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.item-recompensa, .item-historial {
+    background-color: #f5f5f5;
+    padding: 18px 25px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.item-recompensa strong, .item-historial strong {
+    font-weight: 800;
+}
+
+/* Botón Grande */
+.btn-negro-lg {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 20px 60px;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 30px;
+    width: auto;
+}
+
+/* Banner Lila */
+.banner-informativo-lila {
+    background-color: #E6E0F8;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 30px;
+    text-align: center;
+    color: #8257e5;
+    font-weight: 500;
+}
+
+/* =========================================================
+   1. UTILIDADES Y CONTENEDORES GENERALES
+   ========================================================= */
+
+.container-general {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.titulo-seccion {
+    font-size: 36px;
+    color: #C69C3B; /* Dorado Madhouse */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.subtitulo-seccion {
+    font-size: 16px;
+    color: #121212;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+}
+
+.texto-centro {
+    text-align: center;
+}
+
+.mt-20 { margin-top: 20px; }
+.mt-50 { margin-top: 50px; }
+
+/* =========================================================
+   2. SISTEMA DE REJILLAS (GRIDS) PARA ALINEACIÓN
+   ========================================================= */
+
+.grid-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas del mismo tamaño */
+    gap: 30px;
+}
+
+.grid-tres-columnas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.grid-dos-columnas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+/* =========================================================
+   3. EL COMPONENTE REUTILIZABLE: ITEMCARD
+   ========================================================= */
+
+.tarjeta-item {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes curvos */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-item:hover {
+    transform: translateY(-5px); /* Pequeño salto al pasar el mouse */
+}
+
+.img-tarjeta {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Recorta la imagen para que encaje perfecto sin deformarse */
+}
+
+.contenido-tarjeta {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Hace que el botón siempre baje al final, aunque el texto sea corto */
+}
+
+.contenido-tarjeta h3 {
+    font-size: 24px;
+    color: #121212;
+    margin-bottom: 15px;
+}
+
+.label-tarjeta {
+    font-size: 14px;
+    font-weight: bold;
+    color: #C69C3B;
+    margin-bottom: 5px;
+}
+
+.desc-tarjeta {
+    font-size: 15px;
+    color: #333333;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.precio-tarjeta {
+    font-size: 22px;
+    font-weight: bold;
+    color: #121212;
+    margin-bottom: 20px;
+}
+
+.extra-tarjeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #eeeeee;
+}
+
+.icono-reloj {
+    font-size: 24px;
+}
+
+.boton-tarjeta-container {
+    margin-top: auto; /* Empuja el botón a la base de la tarjeta */
+}
+
+.btn-tarjeta-oscuro {
+    width: 100%;
+    background-color: #121212;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-tarjeta-oscuro:hover {
+    background-color: #C69C3B;
+}
+
+/* =========================================================
+   4. SECCIÓN ESPECÍFICA: SOBRE NOSOTROS
+   ========================================================= */
+
+.hero-nosotros {
+    background-color: #f0f0f0;
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 100% !important;
+    width: 100%;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.img-hero-nosotros {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+
+.texto-hero h2 {
+    font-size: 32px;
+    color: #C69C3B;
+    margin-bottom: 20px;
+}
+
+.texto-hero p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #121212;
+}
+
+.tarjeta-info-blanca {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+}
+
+.tarjeta-info-blanca h3 {
+    color: #C69C3B;
+    font-size: 22px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.tarjeta-info-blanca p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.caja-mapa {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icono-pin-grande {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.formulario-contacto label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+.formulario-contacto input,
+.formulario-contacto textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+
+/* =========================================================
+   5. RESPONSIVE DESIGN (Pantallas pequeñas)
+   ========================================================= */
+
+@media (max-width: 992px) {
+    .grid-tarjetas,
+    .grid-tres-columnas {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en Tablets */
+    }
+    .hero-grid,
+    .grid-dos-columnas {
+        grid-template-columns: 1fr; /* 1 columna en Tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-tarjetas,
+    .grid-tres-columnas {
+        grid-template-columns: 1fr; /* 1 columna en Celulares */
+    }
+}
+
+/* =========================================================
+   6. PANTALLAS DEL CLIENTE (Reservas y Fidelización)
+   ========================================================= */
+
+.pagina-fondo-gris {
+    background-color: #E5E5E5;
+    min-height: 80vh;
+}
+
+/* Sistema de Pestañas (Tabs) */
+.tabs-container {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #121212;
+}
+
+.tab-boton {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888888;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.tab-boton.activo {
+    color: #121212;
+    border-bottom: 5px solid #121212;
+}
+
+/* Tarjeta de Reservas */
+.tarjeta-reserva {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.reserva-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #666666;
+}
+
+.reserva-info strong {
+    color: #121212;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+/* Badges de Estado */
+.badge-estado {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 15px;
+}
+
+.badge-verde { background-color: #00C853; }
+.badge-gris { background-color: #BDBDBD; }
+.badge-azul { background-color: #00B0FF; }
+
+/* Botones dentro de la tarjeta de reserva */
+.reserva-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 200px;
+}
+
+.btn-tarjeta-blanco {
+    width: 100%;
+    background-color: #ffffff;
+    color: #121212;
+    border: 2px solid #121212;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-tarjeta-blanco:hover {
+    background-color: #f0f0f0;
+}
+
+/* Pantalla de Fidelización */
+.tarjeta-fidelizacion {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 50px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.puntos-cabecera {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.icono-regalo {
+    font-size: 40px;
+    background-color: #BDBDBD;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+}
+
+.puntos-totales {
+    font-size: 64px;
+    color: #121212;
+    margin: 0;
+}
+
+.puntos-texto {
+    font-size: 24px;
+    color: #666666;
+    margin: 0;
+}
+
+.barra-progreso-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.barra-fondo {
+    background-color: #E0E0E0;
+    height: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.barra-relleno {
+    background-color: #121212;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.texto-progreso {
+    color: #888888;
+    margin-bottom: 15px;
+}
+
+.texto-meta {
+    font-size: 20px;
+    color: #121212;
+}
+
+.seccion-recompensas h3, .seccion-historial h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.item-fila {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.historial-fila {
+    background-color: #F5F5F5;
+    border: none;
+}
+
+.boton-centro {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-ancho {
+    width: 50%;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.banner-informativo {
+    background-color: #E8EAF6; /* Fondo lila suave */
+    color: #5C6BC0;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 700px;
+    margin: 30px auto 0 auto;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .tarjeta-reserva {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .reserva-acciones {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .btn-ancho {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   7. MÓDULO DEL BARBERO
+   ========================================================= */
+
+.sidebar-barbero {
+    background-color: #E8EAF6; /* Fondo lila claro para diferenciar del cliente */
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.titulo-dashboard-barbero {
+    font-size: 40px;
+    color: #121212;
+    margin-bottom: 30px;
+}
+
+/* Grid Dashboard Barbero */
+.grid-stats-barbero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.tarjeta-stat {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    border: 2px solid #121212;
+    box-shadow: 4px 4px 0px #121212; /* Sombra sólida estilo brutalista del mockup */
+}
+
+.tarjeta-stat h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.tarjeta-stat.centrado {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tarjeta-stat.extendida {
+    width: 100%;
+}
+
+.numero-gigante {
+    font-size: 64px;
+    color: #121212;
+    margin: 0;
+}
+
+.texto-stat {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}
+
+.texto-resaltado {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Perfil Barbero */
+.tarjeta-perfil-lila {
+    background-color: #E8EAF6;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.formulario-profesional label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.input-lila {
+    width: 100%;
+    background-color: #E8EAF6;
+    border: 2px solid #121212;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.link-correo {
+    text-decoration: underline;
+    color: #121212;
+}
+
+/* Galería de trabajos */
+.galeria-trabajos {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.img-galeria {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #121212;
+}
+
+.btn-agregar-img {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #121212;
+    background-color: transparent;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-agregar-img:hover {
+    background-color: #d0d4eb;
+}
+
+/* Estadísticas Mini (Perfil) */
+.tarjeta-estadisticas-mini {
+    padding: 30px;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.stat-item-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.numero-medio {
+    font-size: 32px;
+    margin: 0;
+}
+
+.icono-grande {
+    font-size: 32px;
+}
+
+.icono-plus {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.accionable {
+    cursor: pointer;
+    color: #666;
+}
+
+.estrellas {
+    font-size: 24px;
+    letter-spacing: 5px;
+}
+
+/* Mis Servicios Barbero */
+.tarjeta-servicio-barbero {
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.check-circular {
+    font-size: 32px;
+    color: #666;
+}
+
+.servicio-destacado {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.cliente-destacado {
+    font-size: 22px;
+    font-weight: bold;
+    color: #121212;
+}
+
+.reserva-acciones-derecha {
+    margin-left: auto;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.badge-gris-claro {
+    background-color: #BDBDBD;
+    color: #121212;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .grid-stats-barbero {
+        grid-template-columns: 1fr;
+    }
+    .stats-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .reserva-acciones-derecha {
+        margin-left: 0;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .tarjeta-servicio-barbero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
