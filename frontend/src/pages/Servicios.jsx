@@ -1,105 +1,103 @@
-import React from 'react';
-import ItemCard from '../components/ItemCard';
-import corteClasico from '../assets/img/corte-clasico.png';
-import corteModerno from '../assets/img/corte-moderno.png';
-import cortePremium from '../assets/img/corte-premium.png';
-import arregloBarba from '../assets/img/arreglo-barba2.png';
-import barbaCompleta from '../assets/img/barba-completa.png';
-import afeitado from '../assets/img/afeitado.png';
-import cera from '../assets/img/cera.png';
-import shampoo from '../assets/img/shampoo-cabello.png';
-import espuma from '../assets/img/espuma-afeitar.png';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+// Mantenemos una imagen por defecto por si el servicio en la BD no tiene foto
+import placeholderImg from '../assets/img/corte-clasico.png'; 
 
 const Servicios = () => {
+    // --- 1. ESTADOS ---
+    const [servicios, setServicios] = useState([]);
+    const [cargando, setCargando] = useState(true);
+
+    // --- 2. CARGA DE DATOS (GET) ---
+    useEffect(() => {
+        const cargarServicios = async () => {
+            try {
+                // Petición al backend para traer todos los servicios
+                const respuesta = await fetch('http://localhost:8081/api/servicios');
+                
+                if (respuesta.ok) {
+                    const datos = await respuesta.json();
+                    setServicios(datos);
+                } else {
+                    console.error("Error al cargar el catálogo de servicios");
+                }
+            } catch (error) {
+                console.error("Error de conexión:", error);
+            } finally {
+                setCargando(false); // Apagamos el indicador de carga
+            }
+        };
+
+        cargarServicios();
+    }, []);
+
+    // Obtener imagen - Convierte base64 a URL o usa placeholder
+    const obtenerImagen = (fotoServicio) => {
+        if (!fotoServicio || fotoServicio === "null" || fotoServicio === "") {
+            return placeholderImg;
+        }
+        if (fotoServicio.startsWith('data:image')) {
+            return fotoServicio;
+        }
+        return `data:image/png;base64,${fotoServicio}`;
+    };
+
+    // --- 3. RENDERIZADO VISUAL ---
     return (
         <main className="pagina-servicios">
             <div className="container-general">
-                <h1 className="titulo-seccion">Servicios</h1>
+                <h1 className="titulo-seccion">Catálogo de Servicios</h1>
                 
-                <div className="grid-tarjetas">
-                    <ItemCard 
-                        imagen={corteClasico}
-                        titulo="Corte Clásico"
-                        descripcion="Corte tradicional con técnicas profesionales. Incluye lavado, corte personalizado y acabado con secador. Perfecto para un look atemporal y elegante."
-                        precio="$25.000"
-                        duracion="45 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={corteModerno}
-                        titulo="Corte Moderno"
-                        descripcion="Corte contemporáneo siguiendo las últimas tendencias. Diseño personalizado que se adapta a tu estilo con técnicas avanzadas."
-                        precio="$30.000"
-                        duracion="60 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={cortePremium}
-                        titulo="Corte Premium"
-                        descripcion="La experiencia completa con corte, masaje capilar, tratamiento de hidratación y styling. El servicio más exclusivo de nuestra barbería."
-                        precio="$45.000"
-                        duracion="90 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={arregloBarba}
-                        titulo="Arreglo de Barba"
-                        descripcion="Perfilado profesional de barba con navaja caliente, recorte preciso y productos premium para un acabado suave e impecable."
-                        precio="$15.000"
-                        duracion="30 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={barbaCompleta}
-                        titulo="Barba Completa"
-                        descripcion="Servicio completo de barba: diseño, perfilado, afeitado con toalla caliente, exfoliación facial y aplicación de aceites y bálsamos."
-                        precio="$25.000"
-                        duracion="45 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={afeitado}
-                        titulo="Afeitado Tradicional"
-                        descripcion="Experiencia clásica de afeitado con navaja recta, toallas calientes, pre-afeitado y mascarilla facial post-afeitado."
-                        precio="$20.000"
-                        duracion="40 minutos"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                </div>
+                {cargando ? (
+                    // Mensaje mientras esperamos que Spring Boot responda
+                    <div className="texto-centro mt-20"><p>Cargando nuestro catálogo...</p></div>
+                ) : (
+                    <div className="grid-tarjetas">
+                        {/* Verificamos si hay servicios en la BD */}
+                        {servicios.length > 0 ? (
+                            servicios.map((servicio) => (
+                                <div key={servicio.idServicio} className="tarjeta-item">
+                                    <img src={obtenerImagen(servicio.foto)} alt={servicio.nombre} className="img-tarjeta" />
+                                    
+                                    <div className="contenido-tarjeta">
+                                        <h3>{servicio.nombre}</h3>
+                                        
+                                        <p className="label-tarjeta">Descripción:</p>
+                                        <p className="desc-tarjeta">{servicio.descripcion}</p>
+                                        
+                                        <p className="label-tarjeta">Precio:</p>
+                                        <p className="precio-tarjeta">$ {servicio.precio.toLocaleString('es-CO')}</p>
+                                        
+                                        {servicio.duracion && (
+                                            <div className="extra-tarjeta">
+                                                <span className="icono-reloj">⏱</span>
+                                                <div>
+                                                    <p className="label-tarjeta">Duración estimada:</p>
+                                                    <p>{servicio.duracion} min</p>
+                                                </div>
+                                            </div>
+                                        )}
 
-                <h1 className="titulo-seccion mt-50">Productos</h1>
-                <div className="grid-tarjetas">
-                    <ItemCard 
-                        imagen={cera}
-                        titulo="Cera para Cabello"
-                        descripcion="Cera profesional de alta fijación con acabado mate. Ideal para crear estilos definidos que duran todo el día sin apelmazar."
-                        precio="$18.000"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={shampoo}
-                        titulo="Shampoo Premium"
-                        descripcion="Shampoo fortificante con ingredientes naturales. Limpia profundamente mientras nutre y fortalece el cabello desde la raíz."
-                        precio="$22.000"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                    <ItemCard 
-                        imagen={espuma}
-                        titulo="Espuma de Afeitar"
-                        descripcion="Espuma cremosa de afeitado que protege la piel. Proporciona un deslizamiento suave y previene irritaciones."
-                        precio="$16.000"
-                        textoBoton="Reservar"
-                        linkBoton="/reservas"
-                    />
-                </div>
+                                        {/* El botón con Link que pasa el servicio como state */}
+                                        <div className="boton-tarjeta-container">
+                                            <Link to="/reservas" state={{ servicio }}>
+                                                <button className="btn-tarjeta-oscuro">Reservar</button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="texto-centro mt-20" style={{gridColumn: '1 / -1'}}>
+                                <p>Pronto añadiremos nuevos servicios a nuestro catálogo.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* NOTA: He ocultado temporalmente la sección estática de "Productos" 
+                    Si en tu base de datos agregas una columna 'categoria' (Servicio o Producto), 
+                    podemos dividirlos automáticamente usando un .filter() más adelante. */}
             </div>
         </main>
     );

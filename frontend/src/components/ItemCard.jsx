@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// PROPS (PROPIEDADES): 
-// Entre los paréntesis recibimos un objeto con "variables dinámicas". 
-// Esto permite que el mismo componente muestre a un barbero, un shampoo o un corte de cabello dependiendo de qué datos le enviemos desde afuera.
+// Recibe props: imagen, título, descripción, precio, duración, disponibilidad, botón
+// El mismo componente muestra barberos, servicios o productos según las props enviadas
 const ItemCard = ({ imagen, titulo, descripcion, precio, duracion, disponibilidad, textoBoton, linkBoton }) => {
     
     return (
         <div className="tarjeta-item">
-            {/* Inyectamos las props en las etiquetas usando llaves {} */}
+            {/* Mostrar imagen, título y descripción */}
             <img src={imagen} alt={titulo} className="img-tarjeta" />
             
             <div className="contenido-tarjeta">
@@ -17,14 +16,11 @@ const ItemCard = ({ imagen, titulo, descripcion, precio, duracion, disponibilida
                 <p className="label-tarjeta">Descripción:</p>
                 <p className="desc-tarjeta">{descripcion}</p>
                 
-                {/* TERNARIO: Si recibimos la prop 'disponibilidad' (es un barbero), mostramos el texto "Precio base:". Si no (es producto/servicio), mostramos "Precio:" */}
+                {/* Mostrar "Precio base:" para barberos o "Precio:" para servicios */}
                 <p className="label-tarjeta">{disponibilidad ? 'Precio base:' : 'Precio:'}</p>
                 <p className="precio-tarjeta">{precio}</p>
                 
-                {/* 2. RENDERIZADO CONDICIONAL SIMPLE (Operador &&) */}
-                {/* Preguntamos: ¿Nos enviaron el dato de "duración"? 
-                    SI ES VERDAD: Dibuja todo el bloque de <div className="extra-tarjeta">. 
-                    SI ES FALSO (ej. es un barbero y no tiene duración): React ignora este bloque por completo. */}
+                {/* Mostrar duración solo si existe (para servicios) */}
                 {duracion && (
                     <div className="extra-tarjeta">
                         <span className="icono-reloj">⏱</span>
@@ -35,7 +31,7 @@ const ItemCard = ({ imagen, titulo, descripcion, precio, duracion, disponibilida
                     </div>
                 )}
 
-                {/* Misma lógica: Si existe el dato 'disponibilidad', dibuja este bloque. Si no, ignóralo. */}
+                {/* Mostrar disponibilidad solo si existe (para barberos) */}
                 {disponibilidad && (
                     <div className="extra-tarjeta">
                         <span className="icono-reloj">🕒</span>
@@ -46,7 +42,7 @@ const ItemCard = ({ imagen, titulo, descripcion, precio, duracion, disponibilida
                     </div>
                 )}
 
-                {/* El botón de acción que usa las props para saber qué texto mostrar y a dónde redirigir */}
+                {/* Botón de acción que redirige según el link */}
                 <div className="boton-tarjeta-container">
                     <Link to={linkBoton}>
                         <button className="btn-tarjeta-oscuro">{textoBoton}</button>

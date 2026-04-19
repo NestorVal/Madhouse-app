@@ -1,6 +1,5 @@
 package com.madhouse.madhouse_app.model;
 
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 
 @Entity // Indica que esta clase es una entidad de JPA
@@ -23,6 +22,10 @@ public class Servicio{ // Define la clase Servicio como una entidad de JPA
 
     @Column(name = "duracion")
     private Integer duracion;
+
+    @Lob
+    @Column(name = "foto", columnDefinition = "LONGTEXT")
+    private String foto;
 
     // Getters y Setters
     public Integer getIdServicio() { // Define el método getIdServicio para obtener el valor de id_servicio
@@ -63,5 +66,13 @@ public class Servicio{ // Define la clase Servicio como una entidad de JPA
 
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
+    }
+
+    public String getFoto() { 
+        return foto; 
+    }
+
+    public void setFoto(String foto) { 
+        this.foto = foto; 
     }
 }

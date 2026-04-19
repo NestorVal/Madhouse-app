@@ -1,9 +1,8 @@
-// --- IMPORTACIONES ---
+// Página de programa de fidelización con puntos y recompensas
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Fidelizacion = () => {
-    // --- RENDERIZADO VISUAL ---
     return (
         <main className="pagina-fondo-gris">
             <div className="container-general">

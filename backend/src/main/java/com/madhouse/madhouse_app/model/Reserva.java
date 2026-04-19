@@ -3,9 +3,6 @@ package com.madhouse.madhouse_app.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import org.springframework.cglib.core.Local;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -35,6 +32,9 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "id_barbero")
     private Usuario barbero;
+
+    @Column(name = "estado")
+    private String estado = "PENDIENTE";
 
     // --- Getters y Setters ---
 
@@ -84,5 +84,13 @@ public class Reserva {
 
     public void setBarbero(Usuario barbero) {
         this.barbero = barbero;
+    }
+
+    public String getEstado() { 
+        return estado; 
+    }
+
+    public void setEstado(String estado) {
+         this.estado = estado; 
     }
 }

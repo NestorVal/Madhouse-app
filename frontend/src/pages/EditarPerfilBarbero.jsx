@@ -93,7 +93,7 @@ const EditarPerfil = () => {
     return (
         <main className="pagina-fondo-gris">
             <div className="container-reserva" style={{ paddingTop: '40px' }}>
-                <Link to="/perfil-cliente" className="link-volver">← Cancelar y Volver</Link>
+                <Link to="/perfil-barbero" className="link-volver">← Cancelar y Volver</Link>
                 
                 <form className="caja-formulario" onSubmit={guardarCambios}>
                     <section className="texto texto-centro">

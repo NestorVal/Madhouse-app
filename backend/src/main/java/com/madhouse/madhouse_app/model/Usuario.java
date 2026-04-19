@@ -38,6 +38,13 @@ public class Usuario {
     @Column(name = "especialidad")
     private String especialidad;
 
+    @Lob // Indica que es un objeto grande (Large Object)
+    @Column(name = "foto", columnDefinition = "LONGTEXT")
+    private String foto;
+
+    @Column(name = "biografia", columnDefinition = "TEXT")
+    private String biografia;
+
     // Getters y Setters
     public Integer getIdUsuario() {
         return idUsuario;
@@ -117,6 +124,22 @@ public class Usuario {
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public String getFoto() { 
+        return foto; 
+    }
+
+    public void setFoto(String foto) { 
+        this.foto = foto; 
+    }
+
+    public String getBiografia() { 
+        return biografia; 
+    }
+
+    public void setBiografia(String biografia) {
+         this.biografia = biografia; 
     }
 }
 

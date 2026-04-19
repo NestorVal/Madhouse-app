@@ -1,19 +1,19 @@
-// --- 1. IMPORTACIONES ---
+// Login: validar credenciales y guardar sesión en localStorage
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    // --- 2. ESTADO (MEMORIA INDIVIDUAL) ---
-    // A diferencia de EditarPerfil, aquí guardamos cada dato en una variable separada.
+    // Estados del formulario
     const [correo, setCorreo] = useState("");
     const [contrasena, setContrasena] = useState("");
+    const navigate = useNavigate(); 
     
-    // --- 3. FUNCIONES LÓGICAS ---
-    const manejarEnvio = (e) => {
+    // Enviar credenciales al backend y guardar sesión
+    const manejarEnvio = async (e) => {
         e.preventDefault();
         
-        // Lógica condicional: Operador OR (||). "Si el correo está vacío O la contraseña está vacía..."
+        // Validar que no estén vacíos
         if(correo === "" || contrasena === "") {
             Swal.fire({
                 title: 'Campos incompletos',
@@ -21,34 +21,69 @@ const Login = () => {
                 icon: 'error',
                 confirmButtonColor: '#121212'
             });
-            return; // Interrupción: Impide que el código siga si hay un error.
+            return;
         }
 
-        // Si pasó la validación de arriba, ejecuta el "éxito".
-        console.log("Datos a enviar al backend:", correo, contrasena);
-        
-        Swal.fire({
-            title: '¡Bienvenido!',
-            text: 'Sesión iniciada correctamente.',
-            icon: 'success',
-            confirmButtonColor: '#C69C3B'
-        });
+        try {
+            // Solicitar al backend: POST /api/auth/login
+            const respuesta = await fetch('http://localhost:8081/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, contrasena })
+            });
+
+            const datos = await respuesta.json();
+
+            // Si el servidor responde "success", guardar en localStorage
+            if (respuesta.ok && datos.status === "success") {
+                localStorage.setItem("usuario", JSON.stringify(datos));
+
+                Swal.fire({
+                    title: '¡Bienvenido!',
+                    text: datos.mensaje,
+                    icon: 'success',
+                    confirmButtonColor: '#C69C3B'
+                });
+
+                // Redirigir según el rol
+                if (datos.rol === 'ROLE_BARBERO') {
+                    navigate('/dashboard-barbero');
+                } else {
+                    navigate('/dashboard-cliente');
+                }
+
+            } else {
+                Swal.fire({
+                    title: 'Error al ingresar',
+                    text: datos.mensaje || 'Credenciales inválidas',
+                    icon: 'error',
+                    confirmButtonColor: '#121212'
+                });
+            }
+
+        } catch (error) {
+            console.error("Error conectando con el servidor:", error);
+            Swal.fire({
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor. Intenta más tarde.',
+                icon: 'error',
+                confirmButtonColor: '#121212'
+            });
+        }
     };
 
-    // --- 4. RENDERIZADO VISUAL ---
     return(
         <div className="container-login">
-            {/* Evento 'onSubmit' atado a la función de validación */}
             <form className="caja-formulario" onSubmit={manejarEnvio}>
                 <div className="texto">
-                    <h2>Iniciar Sesion</h2>
+                    <h2>Iniciar Sesión</h2>
                 </div>
                 <div className="campos-formulario">
                     <label>Correo</label>
                     <input type="email"
-                        placeholder="Correo electronico"
-                        value={correo} // Atado a la variable de estado
-                        onChange={(e) => setCorreo(e.target.value)} // Función anónima para actualizar la variable
+                        placeholder="Correo electrónico"
+                        value={correo} 
+                        onChange={(e) => setCorreo(e.target.value)} 
                     />
                     
                     <label>Contraseña</label>
@@ -61,7 +96,6 @@ const Login = () => {
                 <div className="boton">
                     <button type="submit" className="btn-formulario">Ingresar</button>
                 </div>
-                {/* Enlace para ir al registro sin recargar página */}
                 <p className="cambio-form">
                     ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link> 
                 </p>

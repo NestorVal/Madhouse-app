@@ -71,6 +71,11 @@ nav ul li{
     margin-left: 20px;
     font-size: large;
 }
+
+.boton .btn-formulario {
+    background-color: #C69C3B !important;
+}
+
 img{
     width: 100%;
     height: auto;

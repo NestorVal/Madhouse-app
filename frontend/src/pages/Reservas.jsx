@@ -1,75 +1,143 @@
-// --- 1. IMPORTACIONES ---
-// Importamos React y 'useState', que es el "hook" (herramienta) que nos permite darle memoria al componente.
-import React, { useState } from 'react';
-// Importamos 'Link' para poder navegar entre páginas sin que el navegador se recargue.
-import { Link } from 'react-router-dom';
+// Componente de reservas: 4 pasos (servicio, barbero, fecha/hora, pago)
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Reservas = () => {
-    // --- 2. MEMORIA DEL COMPONENTE (ESTADO) ---
+    const navigate = useNavigate();
+    const location = useLocation();
+    const servicioDesdeHome = location.state?.servicio;
+
+    // Estados: paso actual, servicios, barberos y datos de la reserva
+    const [pasoActual, setPasoActual] = useState(servicioDesdeHome ? 2 : 1);
+    const [serviciosBD, setServiciosBD] = useState([]);
+    const [barberosBD, setBarberosBD] = useState([]);
     
-    // 'pasoActual': Guarda un número (inicia en 1). Nos dirá en qué "pantalla" del proceso de reserva estamos.
-    // 'setPasoActual': Es la función que usaremos para cambiar ese número (ej. pasar del 1 al 2).
-    const [pasoActual, setPasoActual] = useState(1);
-    
-    // 'datosReserva': Es un OBJETO que funciona como un carrito de compras.
-    // Va a guardar todas las decisiones que tome el usuario a lo largo de los 5 pasos.
+    // Guardar selecciones del usuario en cada paso (servicio, barbero, fecha, hora, pago)
     const [datosReserva, setDatosReserva] = useState({
-        servicio: '',
-        precio: 0,
-        barbero: '',
+        servicio: servicioDesdeHome || null, 
+        precio: servicioDesdeHome?.precio || 0,
+        barbero: null, 
         fecha: '',
         hora: '',
         metodoPago: ''
     });
 
-    // --- 3. FUNCIONES DE ACCIÓN LÓGICA ---
-    
+    // Cargar servicios y barberos desde la base de datos
+    useEffect(() => {
+        const cargarCatalogos = async () => {
+            try {
+                // Peticiones paralelas para cargar servicios y usuarios
+                const resServicios = await fetch('http://localhost:8081/api/servicios');
+                const resUsuarios = await fetch('http://localhost:8081/api/usuarios');
+
+                if (resServicios.ok && resUsuarios.ok) {
+                    const dataServicios = await resServicios.json();
+                    const dataUsuarios = await resUsuarios.json();
+                    
+                    setServiciosBD(dataServicios);
+                    // Filtrar solo usuarios con rol de barbero
+                    setBarberosBD(dataUsuarios.filter(u => u.rol === 'ROLE_BARBERO'));
+                }
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+            }
+        };
+        cargarCatalogos();
+    }, []);
+
+    // Avanzar al siguiente paso
     const siguientePaso = (e) => {
-        // e.preventDefault(): Previene el comportamiento por defecto de los botones dentro de formularios,
-        // evitando que la página se recargue o parpadee al hacer clic.
         e.preventDefault();
-        // Tomamos el paso actual y le sumamos 1 para avanzar a la siguiente pantalla.
         setPasoActual(pasoActual + 1);
     };
 
+    // Retroceder al paso anterior
     const pasoAnterior = (e) => {
         e.preventDefault();
-        // Tomamos el paso actual y le restamos 1 para retroceder, sin perder los datos ya guardados.
         setPasoActual(pasoActual - 1);
     };
 
-    // Función "maestra" que actualiza nuestro objeto 'datosReserva'
+    // Actualizar un dato de la reserva (mantiene los anteriores)
     const seleccionarDato = (campo, valor, precioExtra = 0) => {
         setDatosReserva({ 
-            // ...datosReserva (Spread Operator): Hace una copia exacta de todo lo que ya habíamos guardado
-            // para no borrar las selecciones de pasos anteriores.
             ...datosReserva, 
-            
-            // [campo]: valor -> Usamos corchetes para decirle a React que 'campo' es una variable dinámica.
-            // Si le mandamos 'servicio', actualizará el servicio. Si le mandamos 'barbero', actualizará el barbero.
             [campo]: valor,
-            
-            // Lógica condicional avanzada: Si nos enviaron un 'precioExtra' mayor a 0, actualiza también el precio.
-            ...(precioExtra > 0 && { precio: precioExtra }) // Actualiza el precio si se envía
+            ...(precioExtra > 0 && { precio: precioExtra })
         });
     };
 
-    const confirmarReserva = (e) => {
+    // Confirmar y enviar reserva al backend
+    const confirmarReserva = async (e) => {
         e.preventDefault();
-        // Imprimimos en consola los datos finales que luego enviaremos al backend.
-        console.log("Enviando reserva a la base de datos:", datosReserva);
-        // Alerta nativa del navegador (más adelante aquí podrías poner tu Swal.fire)
-        alert("¡Reserva confirmada con éxito!");
+        
+        // Obtener datos del usuario desde localStorage
+        const clienteLocal = JSON.parse(localStorage.getItem("usuario"));
+
+        // Convertir hora de AM/PM a formato 24 horas
+        let horaMilitar = "00:00";
+        
+        if (datosReserva.hora) {
+            // Separar hora de periodo (AM/PM)
+            const [horaMinutos, periodo] = datosReserva.hora.split(' ');
+            // Separar horas y minutos
+            let [horas, minutos] = horaMinutos.split(':');
+            
+            horas = parseInt(horas);
+            
+            if (periodo === 'PM' && horas !== 12) {
+                horas += 12;
+            } else if (periodo === 'AM' && horas === 12) {
+                horas = 0;
+            }
+            
+            // Formatear para el backend (HH:MM)
+            horaMilitar = `${horas.toString().padStart(2, '0')}:${minutos}`;
+        }
+        
+        // Empaquetar datos para enviar al backend
+        const paqueteReserva = {
+            reserva: {
+                fecha: datosReserva.fecha,
+                hora: horaMilitar,
+                estado: "PENDIENTE",
+                cliente: { idUsuario: clienteLocal.idUsuario },
+                barbero: { idUsuario: datosReserva.barbero.idUsuario }
+            },
+            idServicios: [datosReserva.servicio.idServicio]
+        };
+
+        try {
+            const respuesta = await fetch('http://localhost:8081/api/reservas/crear', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(paqueteReserva)
+            });
+
+            if (respuesta.ok) {
+                Swal.fire({
+                    title: '¡Reserva confirmada con éxito!',
+                    text: 'Te esperamos en Madhouse.',
+                    icon: 'success',
+                    confirmButtonColor: '#C69C3B'
+                }).then(() => {
+                    navigate('/dashboard-cliente'); // Lo devolvemos al panel cuando le da OK
+                });
+            } else {
+                Swal.fire('Error', 'No se pudo agendar la cita.', 'error');
+            }
+        } catch (error) {
+            Swal.fire('Error de conexión', 'No hay comunicación con el servidor.', 'error');
+        }
     };
 
-    // --- 4. ESTRUCTURA VISUAL (RENDERIZADO) ---
+    // Renderizado de los 4 pasos
     return (
         <div className="container-reserva">
             {/* Botón para volver al menú principal */}
             <Link to="/dashboard-cliente" className="link-volver">← Volver al Dashboard</Link>
 
-            {/* --- PASO 1: SERVICIO --- */}
-            {/* Renderizado Condicional (&&): Dibuja este bloque SÓLO SI el pasoActual es exactamente igual a 1 */}
+            {/* Paso 1: seleccionar servicio */}
             {pasoActual === 1 && (
                 <div id="paso-1" className="caja-formulario">
                     <section className="texto">
@@ -78,42 +146,26 @@ const Reservas = () => {
                     </section>
                     
                     <div className="opciones-grid">
-                        <div 
-                            // CSS Dinámico (Template Literals con ``): 
-                            // Si en memoria el servicio es 'Corte Premium', le agregamos la clase 'activo' (para que se pinte de dorado).
-                            className={`opcion-tarjeta seleccionable ${datosReserva.servicio === 'Corte Premium' ? 'activo' : ''}`}
-                            // onClick: Ejecuta una función anónima ()=> que llama a nuestra función maestra con los datos correspondientes.
-                            onClick={() => seleccionarDato('servicio', 'Corte Premium', 25000)}
-                        >
-                            <h3>Corte Premium</h3>
-                            <p>45 min - $25.000</p>
-                        </div>
-                        <div 
-                            className={`opcion-tarjeta seleccionable ${datosReserva.servicio === 'Arreglo de Barba' ? 'activo' : ''}`}
-                            onClick={() => seleccionarDato('servicio', 'Arreglo de Barba', 15000)}
-                        >
-                            <h3>Arreglo de Barba</h3>
-                            <p>30 min - $15.000</p>
-                        </div>
-                        <div 
-                            className={`opcion-tarjeta seleccionable ${datosReserva.servicio === 'Corte + Barba' ? 'activo' : ''}`}
-                            onClick={() => seleccionarDato('servicio', 'Corte + Barba', 35000)}
-                        >
-                            <h3>Corte + Barba</h3>
-                            <p>1 hora - $35.000</p>
-                        </div>
+                        {/* Renderizar una tarjeta por cada servicio */}
+                        {serviciosBD.map((srv) => (
+                            <div 
+                                key={srv.idServicio}
+                                className={`opcion-tarjeta seleccionable ${datosReserva.servicio?.idServicio === srv.idServicio ? 'activo' : ''}`}
+                                onClick={() => seleccionarDato('servicio', srv, srv.precio)}
+                            >
+                                <h3>{srv.nombre}</h3>
+                                <p>{srv.duracion} min - ${srv.precio.toLocaleString('es-CO')}</p>
+                            </div>
+                        ))}
                     </div>
 
                     <div className="boton grupo-botones-derecha">
-                        {/* El botón se deshabilita si no ha elegido servicio (disabled={!datosReserva.servicio}) 
-                            Esto es una validación de seguridad para que el usuario no pueda avanzar en blanco. */}
                         <button onClick={siguientePaso} disabled={!datosReserva.servicio} className="btn-formulario btn-sig">Siguiente</button>
                     </div>
                 </div>
             )}
 
-            {/* --- PASO 2: BARBERO --- */}
-            {/* Se muestra SOLO si el paso actual es 2 */}
+            {/* Paso 2: seleccionar barbero */}
             {pasoActual === 2 && (
                 <div id="paso-2" className="caja-formulario">
                     <section className="texto">
@@ -122,33 +174,28 @@ const Reservas = () => {
                     </section>
                     
                     <div className="opciones-grid">
-                        <div 
-                            className={`opcion-tarjeta seleccionable ${datosReserva.barbero === 'Miguel' ? 'activo' : ''}`}
-                            onClick={() => seleccionarDato('barbero', 'Miguel')}
-                        >
-                            <img src="/img/barbero1.png" alt="Miguel" className="foto-barbero" />
-                            <h3>Miguel</h3>
-                            <p>Especialista clasico</p>
-                        </div>
-                        <div 
-                            className={`opcion-tarjeta seleccionable ${datosReserva.barbero === 'Andres' ? 'activo' : ''}`}
-                            onClick={() => seleccionarDato('barbero', 'Andres')}
-                        >
-                            <img src="/img/barbero2.png" alt="Andres" className="foto-barbero" />
-                            <h3>Andres</h3>
-                            <p>Estilos modernos</p>
-                        </div>
+                        {/* Renderizar un barbero por cada usuario con rol barbero */}
+                        {barberosBD.map((bar) => (
+                            <div 
+                                key={bar.idUsuario}
+                                className={`opcion-tarjeta seleccionable ${datosReserva.barbero?.idUsuario === bar.idUsuario ? 'activo' : ''}`}
+                                onClick={() => seleccionarDato('barbero', bar)}
+                            >
+                                <img src={bar.foto || "/assets/avatar-placeholder.png"} alt={bar.nombre} className="foto-barbero" />
+                                <h3>{bar.nombre} {bar.apellido}</h3>
+                                <p>{bar.especialidad || "Barbero Profesional"}</p>
+                            </div>
+                        ))}
                     </div>
 
                     <div className="boton grupo-botones">
                         <button onClick={pasoAnterior} className="btn-formulario btn-secundario">Atras</button>
-                        {/* Validación: No avanza si no hay un barbero seleccionado en memoria */}
                         <button onClick={siguientePaso} disabled={!datosReserva.barbero} className="btn-formulario btn-sig">Siguiente</button>
                     </div>
                 </div>
             )}
 
-            {/* --- PASO 3: FECHA Y HORA --- */}
+            {/* Paso 3: seleccionar fecha y hora */}
             {pasoActual === 3 && (
                 <div id="paso-3" className="caja-formulario">
                     <section className="texto">
@@ -161,9 +208,7 @@ const Reservas = () => {
                         <input 
                             type="date" 
                             id="fecha-cita" 
-                            // value ata el input al dato guardado en memoria.
                             value={datosReserva.fecha}
-                            // onChange detecta el cambio en el calendario y guarda la fecha (e.target.value).
                             onChange={(e) => seleccionarDato('fecha', e.target.value)}
                         />
 
@@ -186,13 +231,12 @@ const Reservas = () => {
 
                     <div className="boton grupo-botones">
                         <button onClick={pasoAnterior} className="btn-formulario btn-secundario">Atras</button>
-                        {/* Validación Doble: Deshabilita el botón si falta la fecha O la hora (!fecha || !hora) */}
                         <button onClick={siguientePaso} disabled={!datosReserva.fecha || !datosReserva.hora} className="btn-formulario btn-sig">Siguiente</button>
                     </div>
                 </div>
             )}
 
-            {/* --- PASO 4: PAGO --- */}
+            {/* Paso 4: seleccionar método de pago */}
             {pasoActual === 4 && (
                 <div id="paso-4" className="caja-formulario">
                     <section className="texto">
@@ -231,7 +275,7 @@ const Reservas = () => {
                 </div>
             )}
 
-            {/* --- PASO 5: RESUMEN --- */}
+            {/* Paso 5: confirmar reserva */}
             {pasoActual === 5 && (
                 <div id="paso-5" className="caja-formulario">
                     <section className="texto">
@@ -240,18 +284,15 @@ const Reservas = () => {
                     </section>
                     
                     <div className="resumen-cita">
-                        {/* Inyectamos los datos finales guardados en la memoria del objeto datosReserva */}
-                        <p><strong>Servicio:</strong> {datosReserva.servicio}</p>
-                        <p><strong>Barbero:</strong> {datosReserva.barbero}</p>
+                        <p><strong>Servicio:</strong> {datosReserva.servicio?.nombre}</p>
+                        <p><strong>Barbero:</strong> {datosReserva.barbero?.nombre} {datosReserva.barbero?.apellido}</p>
                         <p><strong>Fecha:</strong> {datosReserva.fecha} - {datosReserva.hora}</p>
                         <p><strong>Pago:</strong> {datosReserva.metodoPago}</p>
-                        {/* .toLocaleString() formatea el número para ponerle puntos de miles (ej. 25000 -> 25.000) */}
-                        <p className="total-resumen"><strong>Total: ${datosReserva.precio.toLocaleString()}</strong></p>
+                        <p className="total-resumen"><strong>Total: ${datosReserva.precio.toLocaleString('es-CO')}</strong></p>
                     </div>
 
                     <div className="boton grupo-botones">
                         <button onClick={pasoAnterior} className="btn-formulario btn-secundario">Atras</button>
-                        {/* El botón final no avanza de paso, sino que dispara la función de confirmarReserva */}
                         <button onClick={confirmarReserva} className="btn-formulario">¡Confirmar Cita!</button>
                     </div>
                 </div>

@@ -6,12 +6,26 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+// Un Repository accede a la tabla "usuario" en MySQL
+// Spring Data JPA genera automáticamente las consultas SQL basadas en el nombre del método
+
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    // Nuevo método: Busca un usuario solo por el correo y devuelve un "Optional" (puede existir o no)
+    
+    // Busca un usuario por su correo (el correo es ÚNICO, no hay dos iguales)
+    // Devuelve Optional<Usuario> porque el usuario podría no existir
+    // Casos de uso:
+    // 1. REGISTRO: Verificar si el correo ya está registrado
+    // 2. LOGIN: Buscar el usuario por correo para validar contraseña
+    // SQL generado: SELECT * FROM usuario WHERE correo = ?
     Optional<Usuario> findByCorreo(String correo);
 
-    Usuario findByCorreoAndContrasena(String correo, String contrasena); // Método para autenticar al usuario, busca un usuario por correo y contraseña, si encuentra uno que coincida, lo devuelve; de lo contrario, devuelve null.
+    // Busca un usuario por correo Y contraseña (NO se usa actualmente, dejamos para compatibilidad)
+    // Es mejor usar findByCorreo() y luego validar contraseña con passwordEncoder
+    Usuario findByCorreoAndContrasena(String correo, String contrasena);
 
-    List<Usuario> findByRol(String rol); // Método para obtener todos los usuarios con un rol específico, busca todos los usuarios que tengan el rol especificado ("barbero" o "cliente") y devuelve una lista de esos usuarios.
-
+    // Busca todos los usuarios con un rol específico
+    // Caso de uso: Obtener lista de barberos para mostrar en la página "Barberos"
+    // SQL generado: SELECT * FROM usuario WHERE rol = ?
+    // Parámetro: "ROLE_CLIENTE" o "ROLE_BARBERO"
+    List<Usuario> findByRol(String rol);
 }
