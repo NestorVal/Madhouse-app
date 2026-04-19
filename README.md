@@ -44,7 +44,7 @@ El backend expone una API REST segura para gestionar la lógica de negocio, aute
 1. Configurar la base de datos MySQL local (`application.properties`).
 2. Navegar al directorio: `cd backend`
 3. Ejecutar el proyecto mediante el IDE (VS Code/Eclipse) o con Maven: `./mvnw spring-boot:run`
-4. La API correrá en: `http://localhost:8080`
+4. La API correrá en: `http://localhost:8081`
 
 ---
 
