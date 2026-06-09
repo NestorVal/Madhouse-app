@@ -19,13 +19,26 @@ public class SecurityConfig {
     }
 
     // Esta configuración permite que Postman y React puedan probar las APIs sin ser bloqueados
+    //@Bean
+    //public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //http
+            //.csrf(csrf -> csrf.disable()) // Desactiva la protección CSRF para APIs REST
+           // .authorizeHttpRequests(auth -> auth
+                //.anyRequest().permitAll() // Permite todas las peticiones (Ideal para pruebas en desarrollo)
+            //);
+        //return http.build();
+    //}
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desactiva la protección CSRF para APIs REST
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Permite todas las peticiones (Ideal para pruebas en desarrollo)
-            );
+                .anyRequest().permitAll()
+            )
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable());
+
         return http.build();
     }
 }
