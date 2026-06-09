@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const Login = () => {
     // Estados del formulario
@@ -26,7 +27,7 @@ const Login = () => {
 
         try {
             // Solicitar al backend: POST /api/auth/login
-            const respuesta = await fetch('http://localhost:8081/api/auth/login', {
+            const respuesta = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo, contrasena })

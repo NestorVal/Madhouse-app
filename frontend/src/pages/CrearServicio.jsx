@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config";
 
 const CrearServicio = () => {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ const CrearServicio = () => {
         }
 
         try {
-            const respuesta = await fetch('http://localhost:8081/api/servicios/crear', {
+            const respuesta = await fetch(`${API_URL}/api/usuarios/barberos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

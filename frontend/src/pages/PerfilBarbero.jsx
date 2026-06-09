@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const PerfilBarbero = () => {
     // Estado del perfil del barbero
@@ -28,7 +29,7 @@ const PerfilBarbero = () => {
 
     const cargarDatosServidor = async (id) => {
         try {
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/${id}`);
+            const respuesta = await fetch(`${API_URL}/api/usuarios/${id}`);
             if (respuesta.ok) {
                 const datos = await respuesta.json();
                 setBarbero({
@@ -54,7 +55,7 @@ const PerfilBarbero = () => {
         const idSeguro = usuarioLocal.idUsuario;
 
         try {
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/actualizar/${idSeguro}`, {
+            const respuesta = await fetch(`${API_URL}/api/usuarios/actualizar/${idSeguro}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

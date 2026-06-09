@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const PerfilCliente = () => {
     // --- ESTADOS ---
@@ -27,7 +28,7 @@ const PerfilCliente = () => {
 
     const cargarDatosServidor = async (id) => {
         try {
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/${id}`);
+            const respuesta = await fetch(`${API_URL}/api/usuarios/${id}`);
             if (respuesta.ok) {
                 const datos = await respuesta.json();
                 setUsuario(datos);
@@ -45,7 +46,7 @@ const PerfilCliente = () => {
 
         try {
             // 2. Usamos idSeguro y tu puerto 8081
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/actualizar/${idSeguro}`, {
+            const respuesta = await fetch(`${API_URL}/api/usuarios/actualizar/${idSeguro}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

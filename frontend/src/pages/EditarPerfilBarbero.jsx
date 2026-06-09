@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const EditarPerfil = () => {
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const EditarPerfil = () => {
 
     const cargarDatosServidor = async (id) => {
         try {
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/${id}`);
+            const respuesta = await fetch(`${API_URL}/api/usuarios/${id}`);
             if (respuesta.ok) {
                 const data = await respuesta.json();
                 setDatos(data); // Rellenamos el formulario con lo que viene de la BD
@@ -52,7 +53,7 @@ const EditarPerfil = () => {
         
         try {
             // 2. Usamos el puerto 8081 y el idSeguro
-            const respuesta = await fetch(`http://localhost:8081/api/usuarios/actualizar/${idSeguro}`, {
+            const respuesta = await fetch(`${API_URL}/api/usuarios/actualizar/${idSeguro}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -79,7 +80,7 @@ const EditarPerfil = () => {
                     icon: 'success',
                     confirmButtonColor: '#C69C3B'
                 }).then(() => {
-                    navigate('/perfil-cliente'); // Redirigimos a la vista de perfil
+                    navigate('/perfil-barbero'); // Redirigimos a la vista de perfil
                 });
             } else {
                 Swal.fire('Error', 'No se pudieron actualizar los datos.', 'error');
@@ -122,7 +123,7 @@ const EditarPerfil = () => {
                     </div>
 
                     <div className="boton grupo-botones mt-20">
-                        <Link to="/perfil-cliente" style={{ width: '100%' }}>
+                        <Link to="/perfil-barbero" style={{ width: '100%' }}>
                             <button type="button" className="btn-formulario btn-secundario" style={{ width: '100%' }}>Cancelar</button>
                         </Link>
                         <button type="submit" className="btn-formulario">Guardar Cambios</button>

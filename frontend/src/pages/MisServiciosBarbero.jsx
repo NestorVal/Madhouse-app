@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const MisServiciosBarbero = () => {
     // --- 1. ESTADOS ---
@@ -19,7 +20,7 @@ const MisServiciosBarbero = () => {
 
         try {
             // Hacemos la petición al backend pidiendo solo las reservas de ESTE barbero
-            const respuesta = await fetch(`http://localhost:8081/api/reservas/barbero/${usuarioLocal.idUsuario}`);
+            const respuesta = await fetch(`${API_URL}/api/reservas/barbero/${usuarioLocal.idUsuario}`);
             
             if (respuesta.ok) {
                 const datos = await respuesta.json();
@@ -34,7 +35,7 @@ const MisServiciosBarbero = () => {
     const marcarComoCompletada = async (idReserva) => {
         try {
             // Endpoint imaginado para cambiar el estado de la cita
-            const respuesta = await fetch(`http://localhost:8081/api/reservas/estado/${idReserva}`, {
+            const respuesta = await fetch(`${API_URL}/api/reservas/estado/${idReserva}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ estado: 'COMPLETADA' })

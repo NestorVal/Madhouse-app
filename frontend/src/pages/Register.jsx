@@ -1,7 +1,8 @@
 // Registro: crear nueva cuenta con validación de campos
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Agregamos useNavigate para redirigir tras registrarse
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const Register = () => {
     const navigate = useNavigate();
@@ -14,15 +15,19 @@ const Register = () => {
     const [telefono, setTelefono] = useState("");
     const [direccion, setDireccion] = useState("");
     const [fechanacimiento, setFechanacimiento] = useState("");
-    //El rol por defecto será Cliente
     const [rol, setRol] = useState("ROLE_CLIENTE"); 
+    
 
-    // Enviar formulario al backend
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const correoInvalido = correo !== "" && !regexCorreo.test(correo);
+    const camposIncompletos = !nombre || !apellido || !correo || !contrasena || !telefono || !direccion || !fechanacimiento;
+    const aplicarColorGris = camposIncompletos || correoInvalido;
+
     const manejarEnvio = async (e) => {
         e.preventDefault();
         
-        // Validar que ningún campo esté vacío
-        if(nombre === "" || apellido === "" || correo === "" || contrasena === "" || telefono === "" || direccion === "" || fechanacimiento === "") {
+        // Aunque el botón esté bloqueado, mantenemos la alerta por seguridad
+        if(camposIncompletos) {
             Swal.fire({
                 title: 'Campos incompletos',
                 text: 'Por favor ingresa todos los campos requeridos.',
@@ -33,8 +38,7 @@ const Register = () => {
         }
 
         try {
-            // Solicitar al backend: POST /api/auth/registrar
-            const respuesta = await fetch('http://localhost:8081/api/auth/registrar', {
+            const respuesta = await fetch(`${API_URL}/api/auth/registrar`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -44,13 +48,11 @@ const Register = () => {
                     contrasena,
                     telefono,
                     direccion,
-                    fechaNacimiento: fechanacimiento, // Mapeamos al nombre que espera Spring Boot
-                    rol // Enviamos el rol seleccionado
+                    fechaNacimiento: fechanacimiento,
+                    rol 
                 })
             });
 
-
-            // Si el registro fue exitoso
             if (respuesta.ok) {
                 Swal.fire({
                     title: '¡Registro completado!',
@@ -58,11 +60,9 @@ const Register = () => {
                     icon: 'success',
                     confirmButtonColor: '#C69C3B' 
                 }).then(() => {
-                    // Redirigimos automáticamente al Login después de darle "OK" a la alerta
                     navigate('/login'); 
                 });
             } else {
-                // Si el backend rechaza el registro (ej. correo ya existe)
                 const mensajeError = await respuesta.text();
                 Swal.fire('Error al registrar', mensajeError || 'No se pudo crear la cuenta.', 'error');
             }
@@ -72,7 +72,6 @@ const Register = () => {
         }
     };
 
-    // --- 3. RENDERIZADO VISUAL ---
     return(
         <div className="container-register">
             <form id="seccion-registro" className="caja-formulario" onSubmit={manejarEnvio}>
@@ -89,7 +88,15 @@ const Register = () => {
                     <input type="text" id="apellido-reg" placeholder="Apellido" value={apellido} onChange={(e) =>setApellido(e.target.value)}/>
 
                     <label htmlFor="correo-reg">Correo Electrónico</label>
-                    <input type="email" id="correo-reg" placeholder="tucorreo@email.com" value={correo} onChange={(e) =>setCorreo(e.target.value)}/>
+                    <input 
+                        type="email" 
+                        id="correo-reg" 
+                        placeholder="tucorreo@email.com" 
+                        value={correo} 
+                        onChange={(e) =>setCorreo(e.target.value)}
+                        // CP-03: Clase dinámica para poner el borde rojo si el formato es inválido
+                        className={correoInvalido ? "input-error" : ""}
+                    />
                     
                     <label htmlFor="pass-reg">Contraseña</label>
                     <input type="password" id="pass-reg" placeholder="Crea una contraseña" value={contrasena} onChange={(e) =>setContrasena(e.target.value)}/>
@@ -103,14 +110,13 @@ const Register = () => {
                     <label htmlFor="feNacimiento-reg">Fecha Nacimiento</label>
                     <input type="date" id="feNacimiento-reg" value={fechanacimiento} onChange={(e) =>setFechanacimiento(e.target.value)}/>
 
-                    {/* --- NUEVO CAMPO: SELECCIÓN DE ROL --- */}
                     <label htmlFor="rol-reg">Tipo de Cuenta</label>
                     <select 
                         id="rol-reg" 
                         value={rol} 
                         onChange={(e) => setRol(e.target.value)}
-                        className="input-lila" // Asegúrate de tener una clase CSS para que combine con tus inputs
-                        style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', marginBottom: '15px' }} // Estilos de respaldo
+                        className="input-lila" 
+                        style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', marginBottom: '15px' }}
                     >
                         <option value="ROLE_CLIENTE">Soy Cliente</option>
                         <option value="ROLE_BARBERO">Soy Barbero</option>
@@ -118,7 +124,13 @@ const Register = () => {
                 </div>
 
                 <div className="boton mt-20">
-                    <button id="boton-reservar" className="btn-formulario">Crear Cuenta</button>
+                    <button 
+                        id="boton-reservar" 
+                        className="btn-formulario"
+                       className={`btn-formulario ${aplicarColorGris ? 'boton-desactivado-visual' : ''}`}
+                    >
+                        Crear Cuenta
+                    </button>
                 </div>
                 <p className="cambio-form">¿Ya tienes cuenta? 
                     <Link to="/login"> Inicia sesión aquí </Link>

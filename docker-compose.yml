@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: madhouse-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 1022405079
+      MYSQL_DATABASE: madhouse
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+
+    container_name: madhouse-backend
+
+    depends_on:
+      - mysql
+
+    ports:
+      - "8081:8081"
+
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/madhouse
+      DB_USER: root
+      DB_PASSWORD: 1022405079
+
+  frontend:
+    build: ./frontend
+
+    container_name: madhouse-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql_data:

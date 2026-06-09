@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 
 const MisReservas = () => {
@@ -26,7 +27,7 @@ const MisReservas = () => {
 
             try {
                 // Hacemos la petición al endpoint de cliente que definimos en Spring Boot.
-                const respuesta = await fetch(`http://localhost:8081/api/reservas/cliente/${usuarioLocal.idUsuario}`);
+                const respuesta = await fetch(`${API_URL}/api/reservas/cliente/${usuarioLocal.idUsuario}`);
                 if (respuesta.ok) {
                     const datos = await respuesta.json();
                     setReservas(datos);
@@ -69,7 +70,7 @@ const MisReservas = () => {
 
         if (resultado.isConfirmed) {
             try {
-                const respuesta = await fetch(`http://localhost:8081/api/reservas/estado/${idReserva}`, {
+                const respuesta = await fetch(`${API_URL}/api/reservas/estado/${idReserva}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ estado: 'CANCELADA' })

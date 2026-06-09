@@ -76,6 +76,19 @@ nav ul li{
     background-color: #C69C3B !important;
 }
 
+/* Este color gris se aplicará mientras el formulario esté mal o incompleto */
+.boton .boton-desactivado-visual {
+    background-color: #444444 !important; /* Gris oscuro */
+    color: #888888 !important;
+    border: 1px solid #555555 !important;
+    cursor: pointer; /* Lo dejamos como pointer para que sientan que pueden dar clic y ver el error */
+}
+
+/* El input rojo para el CP-03 sí lo dejamos, ayuda mucho a la evidencia */
+.campos-formulario input.input-error {
+    border: 1px solid #ff4d4d !important;
+}
+
 img{
     width: 100%;
     height: auto;

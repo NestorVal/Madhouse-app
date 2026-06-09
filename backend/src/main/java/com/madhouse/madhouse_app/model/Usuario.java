@@ -1,8 +1,10 @@
 package com.madhouse.madhouse_app.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import lombok.Data;
 
+import java.time.LocalDate;
+@Data
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -33,7 +35,7 @@ public class Usuario {
     private LocalDate fechaNacimiento;  
 
     @Column(name ="rol")
-    private String rol;
+    private String rol = "ROLE_CLIENTE";
 
     @Column(name = "especialidad")
     private String especialidad;

@@ -75,6 +75,12 @@
      <artifactId>cronapp-acesso-cliente</artifactId>
      <version>3.2.1-SP.7</version>
    </dependency>
+
+   <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
  </dependencies>
 
 	<build>

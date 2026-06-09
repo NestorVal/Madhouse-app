@@ -1,4 +1,5 @@
 // --- IMPORTACIONES ---
+import API_URL from "../config";
 import React, { useState, useEffect } from 'react';
 // Importamos nuestro "molde" de tarjeta
 import ItemCard from '../components/ItemCard';
@@ -24,7 +25,8 @@ const Barberos = () => {
     useEffect(() => {
         const cargarBarberos = async () => {
             try {
-                const respuesta = await fetch('http://localhost:8081/api/usuarios/barberos');
+                const respuesta = await fetch(`${API_URL}/api/usuarios/barberos`);
+                // const respuesta = await fetch('http://localhost:8081/api/usuarios/barberos');
                 if (!respuesta.ok) {
                     throw new Error('Error al cargar los barberos');
                 }

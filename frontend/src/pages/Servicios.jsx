@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 // Mantenemos una imagen por defecto por si el servicio en la BD no tiene foto
 import placeholderImg from '../assets/img/corte-clasico.png'; 
 
@@ -13,7 +14,7 @@ const Servicios = () => {
         const cargarServicios = async () => {
             try {
                 // Petición al backend para traer todos los servicios
-                const respuesta = await fetch('http://localhost:8081/api/servicios');
+                const respuesta = await fetch(`${API_URL}/api/servicios`);
                 
                 if (respuesta.ok) {
                     const datos = await respuesta.json();

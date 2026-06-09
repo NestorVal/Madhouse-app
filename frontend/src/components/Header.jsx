@@ -41,7 +41,7 @@ const Header = () => {
                 {/* Si hay sesión: mostrar nombre y foto; si no: botones de login/registro */}
                 {usuario ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <span style={{ fontWeight: 'bold', color: '#fffff' }}>
+                        <span style={{ fontWeight: 'bold',  color: '#C69C3B' }}>
                             {usuario.nombre} {usuario.apellido}
                         </span>
                         <Link to={rutaDashboard}>

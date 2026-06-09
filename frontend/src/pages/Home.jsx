@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import barberia from '../assets/img/barberia.png';
 import barberia2 from '../assets/img/barberia2.png';
 import corteCabello from '../assets/img/corte-cabello.png';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const Home = () => {
     // Estado para almacenar los servicios
@@ -24,7 +25,7 @@ const Home = () => {
     useEffect(() => {
         const cargarServicios = async () => {
             try {
-                const respuesta = await fetch('http://localhost:8081/api/servicios');
+                const respuesta = await fetch(`${API_URL}/api/servicios`);
                 if (!respuesta.ok) {
                     throw new Error('Error al cargar los servicios');
                 }

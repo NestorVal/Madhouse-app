@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; 
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 // Importamos tu imagen local
 import avatarPlaceholder from '../assets/img/avatar-placeholder.png';
 
@@ -37,7 +38,7 @@ const DashboardCliente = () => {
             if (datosLocales && datosLocales.idUsuario) {
                 try {
                     // 1. TRAER DATOS FRESCOS DEL USUARIO (Para arreglar la foto)
-                    const resUsuario = await fetch(`http://localhost:8081/api/usuarios/${datosLocales.idUsuario}`);
+                    const resUsuario = await fetch(`${API_URL}/api/usuarios/${datosLocales.idUsuario}`);
                     if (resUsuario.ok) {
                         const usuarioFresco = await resUsuario.json();
                         setUsuario(usuarioFresco); // Dibuja la foto nueva
@@ -48,7 +49,7 @@ const DashboardCliente = () => {
                     }
 
                     // 2. TRAER LA PRÓXIMA CITA
-                    const resCitas = await fetch(`http://localhost:8081/api/reservas/cliente/${datosLocales.idUsuario}`);
+                    const resCitas = await fetch(`${API_URL}/api/reservas/cliente/${datosLocales.idUsuario}`);
                     if (resCitas.ok) {
                         const todasLasReservas = await resCitas.json();
                         const pendientes = todasLasReservas.filter(r => r.estado === 'PENDIENTE');
@@ -91,7 +92,7 @@ const DashboardCliente = () => {
 
         if (resultado.isConfirmed) {
             try {
-                const respuesta = await fetch(`http://localhost:8081/api/reservas/estado/${idReserva}`, {
+                const respuesta = await fetch(`${API_URL}/api/reservas/estado/${idReserva}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ estado: 'CANCELADA' })

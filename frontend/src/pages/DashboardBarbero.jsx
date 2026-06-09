@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API_URL from "../config"; // Asegúrate de que esta ruta apunte correctamente a tu configuración
 // Asegúrate de que esta ruta apunte correctamente a tu imagen por defecto
 import avatarPlaceholder from '../assets/img/avatar-placeholder.png';
 
@@ -41,7 +42,7 @@ const DashboardBarbero = () => {
             if (barberoLocal && barberoLocal.idUsuario) {
                 try {
                     // Obtener datos del barbero
-                    const resBarbero = await fetch(`http://localhost:8081/api/usuarios/${barberoLocal.idUsuario}`);
+                    const resBarbero = await fetch(`${API_URL}/api/usuarios/${barberoLocal.idUsuario}`);
                     if (resBarbero.ok) {
                         const barberoFresco = await resBarbero.json();
                         setBarbero(barberoFresco);
@@ -52,7 +53,7 @@ const DashboardBarbero = () => {
                     }
 
                     // Obtener citas del barbero
-                    const resCitas = await fetch(`http://localhost:8081/api/reservas/barbero/${barberoLocal.idUsuario}`);
+                    const resCitas = await fetch(`${API_URL}/api/reservas/barbero/${barberoLocal.idUsuario}`);
                     if (resCitas.ok) {
                         const todas = await resCitas.json();
                         // Encontrar primera cita pendiente

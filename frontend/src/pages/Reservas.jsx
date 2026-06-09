@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import API_URL from "../config"; // configuración centralizada de la URL de la API
 
 const Reservas = () => {
     const navigate = useNavigate();
@@ -28,8 +29,8 @@ const Reservas = () => {
         const cargarCatalogos = async () => {
             try {
                 // Peticiones paralelas para cargar servicios y usuarios
-                const resServicios = await fetch('http://localhost:8081/api/servicios');
-                const resUsuarios = await fetch('http://localhost:8081/api/usuarios');
+                const resServicios = await fetch(`${API_URL}/api/servicios`);
+                const resUsuarios = await fetch(`${API_URL}/api/usuarios`);
 
                 if (resServicios.ok && resUsuarios.ok) {
                     const dataServicios = await resServicios.json();
@@ -108,7 +109,7 @@ const Reservas = () => {
         };
 
         try {
-            const respuesta = await fetch('http://localhost:8081/api/reservas/crear', {
+            const respuesta = await fetch(`${API_URL}/api/reservas/crear`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(paqueteReserva)
