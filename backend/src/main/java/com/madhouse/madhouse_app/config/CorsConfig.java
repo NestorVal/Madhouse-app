@@ -9,7 +9,7 @@ public class CorsConfig implements WebMvcConfigurer { // Implementa WebMvcConfig
     @Override // Sobrescribe el método addCorsMappings para configurar las reglas de CORS
     public void addCorsMappings(CorsRegistry registry) { // Configura las reglas de CORS para la aplicación
         registry.addMapping("/**") // Permite todas las rutas de la API
-                .allowedOrigins("http://localhost:3000", "https://frontend-madhouse-production.up.railway.app") // Permite a React conectarse
+                .allowedOrigins("http://localhost:3000", "https://madhouse.up.railway.app") // Permite a React conectarse
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Permite los métodos HTTP comunes
                 .allowedHeaders("*") // Permite todos los encabezados
                 .allowCredentials(true); // Permite el envío de cookies y credenciales en las solicitudes CORS
