@@ -36,7 +36,7 @@ const CrearServicio = () => {
         }
 
         try {
-            const respuesta = await fetch(`${API_URL}/api/usuarios/barberos`, {
+            const respuesta = await fetch(`${API_URL}/api/servicios/crear`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
