@@ -26,33 +26,39 @@ const Login = () => {
         }
 
         try {
-            // Solicitar al backend: POST /api/auth/login
-            const respuesta = await fetch(`${API_URL}/api/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ correo, contrasena })
-            });
+    // Solicitar al backend: POST /api/auth/login
+    const respuesta = await fetch(`${API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo, contrasena })
+    });
 
-            const datos = await respuesta.json();
+    // 1. Transformamos la respuesta UNA SOLA VEZ
+    const datos = await respuesta.json();
 
-            // Si el servidor responde "success", guardar en localStorage
-            if (respuesta.ok && datos.status === "success") {
-                localStorage.setItem("usuario", JSON.stringify(datos));
+    // 2. Evaluamos la respuesta
+    if (respuesta.ok && datos.status === "success") {
+        
+        // Guardamos los datos que ya leímos en el paso 1
+        localStorage.setItem("usuario", JSON.stringify(datos));
+        localStorage.setItem("token", datos.token); // Guardar token si es necesario
+        
+        // Disparamos el aviso visual para el Header
+        window.dispatchEvent(new Event('cambioSesion'));
+        
+        Swal.fire({
+            title: '¡Bienvenido!',
+            text: datos.mensaje,
+            icon: 'success',
+            confirmButtonColor: '#C69C3B'
+        });
 
-                Swal.fire({
-                    title: '¡Bienvenido!',
-                    text: datos.mensaje,
-                    icon: 'success',
-                    confirmButtonColor: '#C69C3B'
-                });
-
-                // Redirigir según el rol
-                if (datos.rol === 'ROLE_BARBERO') {
-                    navigate('/dashboard-barbero');
-                } else {
-                    navigate('/dashboard-cliente');
-                }
-
+        // Redirigir según el rol
+        if (datos.rol === 'ROLE_BARBERO') {
+            navigate('/dashboard-barbero');
+        } else {
+            navigate('/dashboard-cliente');
+        }
             } else {
                 Swal.fire({
                     title: 'Error al ingresar',
