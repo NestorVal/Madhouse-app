@@ -568,6 +568,11 @@ footer #copyright{
     min-height: 80vh;
 }
 
+.contenido-reserva {
+    width: 100%;
+    max-width: 800px;
+}
+
 .opciones-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

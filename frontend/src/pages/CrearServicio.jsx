@@ -67,57 +67,60 @@ const CrearServicio = () => {
 
     return (
         <main className="pagina-fondo-gris">
-            <Link to="/dashboard-barbero" className="link-volver">← Volver al Dashboard</Link>
-            <div className="container-reserva" style={{ paddingTop: '40px' }}>                
-                <form className="caja-formulario" onSubmit={manejarEnvio}>
-                    <section className="texto texto-centro">
-                        <h2>Crear Nuevo Servicio</h2>
-                        <p>Añade un servicio al catálogo general</p>
-                    </section>
+            <div className="container-reserva">
+                <div className= "contenido-reserva">
+                    <Link to="/dashboard-barbero" className="link-volver">← Volver al Dashboard</Link>
                     
-                    <div className="campos-formulario">
-                        {/* --- NUEVO CAMPO: SUBIR IMAGEN --- */}
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
-                            {foto ? (
-                                <img 
-                                    src={foto} 
-                                    alt="Vista previa" 
-                                    style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px', marginBottom: '10px', border: '2px solid #C69C3B' }} 
-                                />
-                            ) : (
-                                <div style={{ width: '150px', height: '150px', backgroundColor: '#e9ecef', borderRadius: '10px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6c757d' }}>
-                                    Sin imagen
-                                </div>
-                            )}
-                            <label htmlFor="foto-servicio" className="btn-formulario btn-secundario" style={{ cursor: 'pointer', textAlign: 'center' }}>
-                                📷 Seleccionar Foto
-                                <input 
-                                    id="foto-servicio"
-                                    type="file" 
-                                    accept="image/*"
-                                    onChange={manejarCambioFoto}
-                                    style={{ display: 'none' }}
-                                />
-                            </label>
+                    <form className="caja-formulario" onSubmit={manejarEnvio}>
+                        <section className="texto texto-centro">
+                            <h2>Crear Nuevo Servicio</h2>
+                            <p>Añade un servicio al catálogo general</p>
+                        </section>
+                        
+                        <div className="campos-formulario">
+                            {/* --- NUEVO CAMPO: SUBIR IMAGEN --- */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
+                                {foto ? (
+                                    <img 
+                                        src={foto} 
+                                        alt="Vista previa" 
+                                        style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px', marginBottom: '10px', border: '2px solid #C69C3B' }} 
+                                    />
+                                ) : (
+                                    <div style={{ width: '150px', height: '150px', backgroundColor: '#e9ecef', borderRadius: '10px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6c757d' }}>
+                                        Sin imagen
+                                    </div>
+                                )}
+                                <label htmlFor="foto-servicio" className="btn-formulario btn-secundario" style={{ cursor: 'pointer', textAlign: 'center' }}>
+                                    📷 Seleccionar Foto
+                                    <input 
+                                        id="foto-servicio"
+                                        type="file" 
+                                        accept="image/*"
+                                        onChange={manejarCambioFoto}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                            </div>
+
+                            <label>Nombre del Servicio *</label>
+                            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Ej. Tinte de Barba" required />
+
+                            <label>Descripción *</label>
+                            <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="Detalla lo que incluye el servicio..." rows="3" className="input-lila" required></textarea>
+
+                            <label>Precio (COP) *</label>
+                            <input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} placeholder="Ej. 25000" required />
+
+                            <label>Duración (Minutos) *</label>
+                            <input type="number" value={duracion} onChange={(e) => setDuracion(e.target.value)} placeholder="Ej. 45" required />
                         </div>
 
-                        <label>Nombre del Servicio *</label>
-                        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Ej. Tinte de Barba" required />
-
-                        <label>Descripción *</label>
-                        <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} placeholder="Detalla lo que incluye el servicio..." rows="3" className="input-lila" required></textarea>
-
-                        <label>Precio (COP) *</label>
-                        <input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} placeholder="Ej. 25000" required />
-
-                        <label>Duración (Minutos) *</label>
-                        <input type="number" value={duracion} onChange={(e) => setDuracion(e.target.value)} placeholder="Ej. 45" required />
-                    </div>
-
-                    <div className="boton mt-20">
-                        <button type="submit" className="btn-formulario">Guardar Servicio</button>
-                    </div>
-                </form>
+                        <div className="boton mt-20">
+                            <button type="submit" className="btn-formulario">Guardar Servicio</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     );
