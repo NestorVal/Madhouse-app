@@ -5,6 +5,7 @@ import avatarPlaceholder from '../assets/img/avatar-placeholder.png';
 const Header = () => {
     // Guardar usuario en memoria al cargar
     const [usuario, setUsuario] = useState(null);
+    const [sesionActiva, setSesionActiva] = useState(false);      
     const fotoDefault = avatarPlaceholder;
     
     // Convertir foto base64 o usar placeholder por defecto
@@ -20,8 +21,10 @@ const Header = () => {
             const usuarioLocal = localStorage.getItem("usuario");
             if (usuarioLocal) {
                 setUsuario(JSON.parse(usuarioLocal));
+                setSesionActiva(true);
             } else {
                 setUsuario(null); // Si no hay usuario, limpiamos el estado
+                setSesionActiva(false);
             }
         };
 
