@@ -67,9 +67,8 @@ const CrearServicio = () => {
 
     return (
         <main className="pagina-fondo-gris">
-            <div className="container-reserva" style={{ paddingTop: '40px' }}>
-                <Link to="/dashboard-barbero" className="link-volver">← Volver al Dashboard</Link>
-                
+            <Link to="/dashboard-barbero" className="link-volver">← Volver al Dashboard</Link>
+            <div className="container-reserva" style={{ paddingTop: '40px' }}>                
                 <form className="caja-formulario" onSubmit={manejarEnvio}>
                     <section className="texto texto-centro">
                         <h2>Crear Nuevo Servicio</h2>
