@@ -110,10 +110,12 @@ const DashboardCliente = () => {
     };
 
     // --- SEGURIDAD ---
-    const cerrarSesion = () => {
-        localStorage.removeItem("usuario"); 
-        navigate('/login'); 
-    };
+        const cerrarSesion = () => {
+            localStorage.removeItem("usuario"); 
+            localStorage.removeItem("token"); 
+            window.dispatchEvent(new Event('cambioSesion'));
+            navigate('/login'); 
+        };
 
     return (
         <div className="container-dashboard">

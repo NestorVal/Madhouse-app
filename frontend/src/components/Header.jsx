@@ -14,14 +14,28 @@ const Header = () => {
         return `data:image/png;base64,${fotoUsuario}`;
     };
 
-    // Buscar usuario en localStorage al cargar el componente
+    // Buscar usuario en localStorage y escuchar cambios
     useEffect(() => {
-        const usuarioLocal = localStorage.getItem("usuario");
-        if (usuarioLocal) {
-            setUsuario(JSON.parse(usuarioLocal));
-        }
-    }, []);
+        const cargarUsuario = () => {
+            const usuarioLocal = localStorage.getItem("usuario");
+            if (usuarioLocal) {
+                setUsuario(JSON.parse(usuarioLocal));
+            } else {
+                setUsuario(null); // Si no hay usuario, limpiamos el estado
+            }
+        };
 
+        // Ejecutar la función la primera vez que carga el componente
+        cargarUsuario();
+
+        // Quedarse escuchando un evento personalizado llamado 'cambioSesion'
+        window.addEventListener('cambioSesion', cargarUsuario);
+
+        // Limpiar el evento cuando el componente se destruya para evitar bugs
+        return () => {
+            window.removeEventListener('cambioSesion', cargarUsuario);
+        };
+    }, []);
     // Redirigir al dashboard correcto según el rol
     const rutaDashboard = usuario?.rol === 'ROLE_BARBERO' ? '/dashboard-barbero' : '/dashboard-cliente';
 

@@ -73,7 +73,10 @@ const DashboardBarbero = () => {
 
     // Cerrar sesión del barbero
     const cerrarSesion = () => {
-        localStorage.removeItem("usuario");
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('token'); // (o como se llame tu token)
+        // Esto le grita a toda la aplicación que la sesión cambió
+        window.dispatchEvent(new Event('cambioSesion'));
         navigate('/login');
     };
 
