@@ -557,6 +557,20 @@ footer #copyright{
     font-weight: bold;
 }
 
+.container-perfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+.contenido-perfil {
+    width: 100%;
+    max-width: 500px;
+}
+
 /*ESTILOS FLUJO DE RESERVA*/
 
 .container-reserva {

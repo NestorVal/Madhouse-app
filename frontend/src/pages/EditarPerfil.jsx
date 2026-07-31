@@ -92,8 +92,8 @@ const EditarPerfil = () => {
     // --- RENDERIZADO VISUAL ---
     return (
         <main className="pagina-fondo-gris">
-            <div className="container-reserva">
-                <div className="contenido-reserva">
+            <div className="container-perfil">
+                <div className="contenido-perfil">
                     <Link to="/perfil-cliente" className="link-volver">← Cancelar y Volver</Link>
                     
                     <form className="caja-formulario" onSubmit={guardarCambios}>
