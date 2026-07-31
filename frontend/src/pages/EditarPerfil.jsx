@@ -92,42 +92,44 @@ const EditarPerfil = () => {
     // --- RENDERIZADO VISUAL ---
     return (
         <main className="pagina-fondo-gris">
-            <div className="container-reserva" style={{ paddingTop: '40px' }}>
-                <Link to="/perfil-cliente" className="link-volver">← Cancelar y Volver</Link>
-                
-                <form className="caja-formulario" onSubmit={guardarCambios}>
-                    <section className="texto texto-centro">
-                        <h2>Editar Mi Perfil</h2>
-                        <p>Actualiza tu información personal</p>
-                    </section>
+            <div className="container-reserva">
+                <div className="contenido-reserva">
+                    <Link to="/perfil-cliente" className="link-volver">← Cancelar y Volver</Link>
                     
-                    <div className="campos-formulario">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" value={datos.nombre || ""} onChange={manejarCambio} required />
+                    <form className="caja-formulario" onSubmit={guardarCambios}>
+                        <section className="texto texto-centro">
+                            <h2>Editar Mi Perfil</h2>
+                            <p>Actualiza tu información personal</p>
+                        </section>
+                        
+                        <div className="campos-formulario">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" value={datos.nombre || ""} onChange={manejarCambio} required />
 
-                        <label>Apellido</label>
-                        <input type="text" name="apellido" value={datos.apellido || ""} onChange={manejarCambio} required />
+                            <label>Apellido</label>
+                            <input type="text" name="apellido" value={datos.apellido || ""} onChange={manejarCambio} required />
 
-                        <label>Correo Electrónico (No editable)</label>
-                        <input type="email" name="correo" value={datos.correo || ""} disabled style={{ backgroundColor: '#e9ecef' }} />
+                            <label>Correo Electrónico (No editable)</label>
+                            <input type="email" name="correo" value={datos.correo || ""} disabled style={{ backgroundColor: '#e9ecef' }} />
 
-                        <label>Teléfono</label>
-                        <input type="tel" name="telefono" value={datos.telefono || ""} onChange={manejarCambio} required />
+                            <label>Teléfono</label>
+                            <input type="tel" name="telefono" value={datos.telefono || ""} onChange={manejarCambio} required />
 
-                        <label>Dirección</label>
-                        <input type="text" name="direccion" value={datos.direccion || ""} onChange={manejarCambio} required />
+                            <label>Dirección</label>
+                            <input type="text" name="direccion" value={datos.direccion || ""} onChange={manejarCambio} required />
 
-                        <label>Fecha de Nacimiento</label>
-                        <input type="date" name="fechaNacimiento" value={datos.fechaNacimiento || ""} onChange={manejarCambio} required />
-                    </div>
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" name="fechaNacimiento" value={datos.fechaNacimiento || ""} onChange={manejarCambio} required />
+                        </div>
 
-                    <div className="boton grupo-botones mt-20">
-                        <Link to="/perfil-cliente" style={{ width: '100%' }}>
-                            <button type="button" className="btn-formulario btn-secundario" style={{ width: '100%' }}>Cancelar</button>
-                        </Link>
-                        <button type="submit" className="btn-formulario">Guardar Cambios</button>
-                    </div>
-                </form>
+                        <div className="boton grupo-botones mt-20">
+                            <Link to="/perfil-cliente" style={{ width: '100%' }}>
+                                <button type="button" className="btn-formulario btn-secundario" style={{ width: '100%' }}>Cancelar</button>
+                            </Link>
+                            <button type="submit" className="btn-formulario">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     );
